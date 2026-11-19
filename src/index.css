@@ -1,0 +1,145 @@
+@import "tailwindcss";
+@import "@fontsource-variable/outfit";
+@import "@fontsource-variable/red-hat-display";
+@import "@fontsource-variable/red-hat-display/wght-italic.css";
+
+/* class-based dark mode (toggled on <html>) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  FoodDash design system
+  - 3 primary colours: brand (violet), accent (orange), success (emerald) + neutral (zinc)
+  - 8px spacing grid (Tailwind's 4px scale used in steps of 2)
+  - one radius for every component: --radius-ui (12px)
+*/
+@theme {
+  --font-sans: "Outfit Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Red Hat Display Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-50: #f3eeff;
+  --color-brand-100: #e7dcff;
+  --color-brand-200: #cfb9ff;
+  --color-brand-300: #b08cff;
+  --color-brand-400: #9466ff;
+  --color-brand-500: #7d40ff;
+  --color-brand-600: #6a2eeb;
+  --color-brand-700: #5822c4;
+  --color-brand-800: #461c9b;
+  --color-brand-900: #2a1163;
+
+  --color-accent-50: #fff3ec;
+  --color-accent-100: #ffe3d3;
+  --color-accent-200: #ffc3a3;
+  --color-accent-300: #ff9f6e;
+  --color-accent-400: #ff8248;
+  --color-accent-500: #ff6a2b;
+  --color-accent-600: #eb5414;
+  --color-accent-700: #c2410c;
+
+  --color-success-50: #ecfdf5;
+  --color-success-100: #d1fae5;
+  --color-success-400: #34d399;
+  --color-success-500: #10b981;
+  --color-success-600: #059669;
+  --color-success-700: #047857;
+
+  --color-ink: #0a0a0a;
+  --color-paper: #fafafa;
+
+  --radius-ui: 12px;
+  --radius-section: 32px;
+
+  /* type scale */
+  --text-display: 4.5rem;
+  --text-display--line-height: 1.2;
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-fade-up: fade-up 0.6s ease-out both;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* semantic surface tokens that flip in dark mode */
+@layer base {
+  :root {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --surface-2: #f4f4f5;
+    --text: #171717;
+    --text-muted: #5f5f66;
+    --border: #e4e4e7;
+    color-scheme: light;
+  }
+  .dark {
+    --bg: #0a0a0a;
+    --surface: #141416;
+    --surface-2: #1c1c20;
+    --text: #f4f4f5;
+    --text-muted: #a1a1aa;
+    --border: #2a2a30;
+    color-scheme: dark;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.5rem;
+    letter-spacing: 0.02em;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); letter-spacing: -0.01em; }
+  ::selection { background: var(--color-brand-500); color: white; }
+  :focus-visible { outline: 2px solid var(--color-brand-500); outline-offset: 2px; }
+  img { max-width: 100%; }
+}
+
+@layer components {
+  .container-x { margin-inline: auto; width: 100%; max-width: 1440px; padding-inline: 1rem; }
+  @media (min-width: 640px) { .container-x { padding-inline: 2rem; } }
+  @media (min-width: 1280px) { .container-x { padding-inline: 6rem; } }
+
+  .section-y { padding-block: 4rem; }
+  @media (min-width: 1024px) { .section-y { padding-block: 6rem; } }
+
+  .surface { background: var(--surface); border: 1px solid var(--border); }
+  .text-muted { color: var(--text-muted); }
+  .border-ui { border-color: var(--border); }
+
+  /* type scale */
+  .t-display { font-family: var(--font-display); font-weight: 700; font-size: 2.5rem; line-height: 1.15; }
+  @media (min-width: 768px) { .t-display { font-size: 3.5rem; } }
+  @media (min-width: 1280px) { .t-display { font-size: 4.5rem; line-height: 1.2; } }
+  .t-h2 { font-family: var(--font-display); font-weight: 700; font-size: 2rem; line-height: 1.2; }
+  @media (min-width: 1024px) { .t-h2 { font-size: 3rem; } }
+  .t-h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; line-height: 1.3; }
+  .t-h4 { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; line-height: 1.5rem; }
+
+  /* italic accent words in headings (e.g. "Delivered *Fresh*") */
+  .accent-italic { font-style: italic; font-weight: 800; }
+
+  .dot-grid {
+    background-image: radial-gradient(rgb(255 255 255 / 0.18) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+
+  .prose-fd p { margin-bottom: 1rem; color: var(--text-muted); line-height: 1.75rem; }
+  .prose-fd h2 { font-size: 1.5rem; font-weight: 700; margin: 2rem 0 0.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
